@@ -1,4 +1,7 @@
-##find missing obs
+#find missing obs
+
+##to find the missing obs, first find the total sum of the missing obs. then equally spread the sum across all spots if it is possible. 
+##last, loop over the array to add the remained from the spread to each spot until there is no remain.
 
 class Solution {
     public int[] missingRolls(int[] rolls, int mean, int n) {
@@ -31,3 +34,40 @@ class Solution {
 
         
     }
+
+#roll num times dices to hit a target number
+
+##dynamic programming method:
+1. create a 2-d array, representing the dices and the target value it can hit with different possible outcomes of faces
+    we know that for 0 face and 0 dice there is only one way. for all 0 dices there is 0 way. 
+    for all 1 dice to reach the target there is 0 or 1 way depending on the faces.
+2. iterate through each dice:
+for each dice:
+    for each possible face:
+        if it is reachable with the current face value:
+            find the last dice and its temp sum value, and add it to the current dice and sum value position
+            modulo the value and go on in the loop
+3. Attention to detail: 
+- use long data type for better calculation, otherwise, when it is converted to int, some value would be lost.
+- modulo the value each loop
+- i don't know how it works but let us just go with it.
+
+class Solution {
+    
+    public int numRollsToTarget(int n, int k, int target) {
+        long mod = 1000000007;
+        long[][] map  = new long[n+1][target+1];
+        map[0][0] = 1;
+        for ( int i = 1; i<= n;i++){
+            for (int j = 1;j<=k;j++){
+                for (int m = target; m >= j;m--){
+                    if (map[i-1][m-j]!=0){
+                        map[i][m] +=map[i-1][m-j];
+                        map[i][m] = map[i][m]%mod;
+                    }
+                }
+            }
+        }
+        return (int) (map[n][target]);
+    }
+}
