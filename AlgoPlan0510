@@ -1,0 +1,33 @@
+##find missing obs
+
+class Solution {
+    public int[] missingRolls(int[] rolls, int mean, int n) {
+        int m = rolls.length;
+        int[] missed = new int[n];
+        int totalsum = (m+n)*mean;
+        for (int s: rolls){
+            totalsum -=s;
+        }
+        if (totalsum >= n*1 && totalsum <=n*6 ){
+        
+            for (int j=0;j<n;j++) missed[j] = totalsum/n;
+            int remain = totalsum % n;
+            int j =0;
+            while (remain >0){
+                if (j >=n){
+                    j = 0;
+                }
+                missed[j] +=1;
+                remain--;
+                j++;
+                }
+            return missed;
+            }else{
+            int[] nul = new int[0];
+            return nul;
+        }
+            
+        }
+
+        
+    }
