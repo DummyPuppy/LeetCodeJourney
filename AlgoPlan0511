@@ -1,0 +1,88 @@
+#Equal Sum Arrays With Minimum Number of Operations
+
+##logic:
+1. sort the number vectors
+2. from the vector with larger sum ,reduce the value of its largest numbers.
+3. when the reduction in the larger sum vector gets smaller, switch to the smaller sum vector
+4. to do the switching frequently, we can go from the small sum vector and then to the large sum vector one by one:
+  -use index cursor to see if the vector has been thoroughly exploited
+  -when they are both not exploited, compare each pair reduction, deduce the larger one, change its index and move on
+  -when one is exploited, find out the remaining one and keep looping inside.
+
+##reference:https://www.youtube.com/watch?v=vZtCKL_OwdA
+class Solution {
+    public int helper(int[] small,int[] large,int diff){
+        int count=0;
+        Arrays.sort(small);
+        Arrays.sort(large);
+        int small_cur = 0;
+        int large_cur = large.length-1;
+        while( diff >0)
+        {
+            
+            if(small_cur<small.length && large_cur>=0 ){
+                 if (6-small[small_cur] >=large[large_cur]-1){
+                diff -=6-small[small_cur];
+                small_cur++;
+                count++;
+            }else{
+                diff -=large[large_cur]-1;
+                large_cur--;
+                count++;
+            }
+                
+            }else{
+                if(small_cur<small.length){
+                   diff -=6-small[small_cur];
+                small_cur++;
+                count++; 
+                }
+                if ( large_cur>=0){
+                     diff -=large[large_cur]-1;
+                large_cur--;
+                count++;
+                }
+            }
+           
+        }
+        if (diff <=0){
+            return count;
+        }else{
+            return -1;
+        }
+    
+
+    }
+    public int minOperations(int[] nums1, int[] nums2) {
+        int sum1 =0;
+        int sum2 = 0;
+        int diff ;
+        int result;
+        for (int j = 0; j<nums1.length;j++){
+            sum1 +=nums1[j];
+        }
+        for (int i = 0; i < nums2.length;i++){
+            sum2+=nums2[i];
+        }
+        if (sum1 ==sum2){
+            return 0;
+        }
+        if (sum1 > sum2){
+            if (nums2.length *6 >= nums1.length*1){
+                            diff = sum1-sum2;
+            result = helper(nums2,nums1,diff);
+            
+            }else{
+                result = -1;
+            }
+        }else{
+            if(nums1.length * 6 >= nums2.length*1){
+            diff = sum2-sum1;
+            result = helper(nums1,nums2,diff);
+            }else{
+                result = -1;
+            }
+        }
+        return result;
+    }
+}
