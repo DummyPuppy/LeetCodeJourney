@@ -86,3 +86,37 @@ class Solution {
         return result;
     }
 }
+
+
+#reverse once to match two strings
+##ideas: 1. to check whether there are exactly 2 misplaces of characters;
+2. to check if the misplaced characters are matched with the correct ones at the correct position
+
+class Solution {
+    
+ 
+    public boolean areAlmostEqual(String s1, String s2) {
+        
+        if (s1.equals(s2)){
+            return true;
+        }
+        int miscount = 0;
+        ArrayList<Integer> position  = new ArrayList();
+        for (int i =0;i<s1.length();i++){
+            if (s1.charAt(i)!=s2.charAt(i)){
+                miscount++;
+                position.add(i);
+            }
+        }
+        if (miscount !=2){
+            return false;
+        }else{
+            int pos1= position.get(0);
+            int pos2= position.get(1);
+            if ((s1.charAt(pos1) == s2.charAt(pos2))&&(s1.charAt(pos2)==s2.charAt(pos1))){
+                return true;
+            }else{return false;}
+        }
+        
+    }
+}
