@@ -1,0 +1,94 @@
+#Buddy String
+
+##Swap once to get the same string as the goal
+solution:
+-first, see if the two strings are of the same length;
+-if same length, check if the strings are the same;
+  -same string, if there are duplicate characters, true (use a map to store counts)
+  -not same string, check if there are exactly two displaced characters and if they match each other, if so, true ( use a list to store misplaced character)
+  
+class Solution {
+    
+   
+    public boolean buddyStrings(String s, String goal) {
+        if (s.length() != goal.length()){
+            return false;
+        }
+        Map <Character,Integer> map = new HashMap();
+        List<Integer> pos = new ArrayList();
+        for (int i =0; i < s.length();i++){
+            if (s.charAt(i) != goal.charAt(i)){
+               pos.add(i);
+            }
+             map.put(s.charAt(i), map.getOrDefault(s.charAt(i),0)+1);
+        }
+        if (s.equals(goal)){
+            for (Character c: map.keySet()){
+                if (map.get(c) >1){
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (pos.size()!=2){
+            return false;
+        }else{
+            if (s.charAt(pos.get(0)) ==goal.charAt(pos.get(1)) && 
+               s.charAt(pos.get(1)) ==goal.charAt(pos.get(0))){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+}
+
+
+#lemonade change
+give changes to customers who buy lemonade of 5 dollars
+##the note will only be 5, 10, 20, so we can only brute force all cases, and count # of each note;
+-if the cash is five, put it in the pocket;
+-if the cash is ten, give a change of 5, put 10 in the pocket;
+-if the cash is 20, give a change of 5 & 10 or three 5s, (and put 20 in the pocket)
+-if any of the above case fails, return false;
+
+class Solution {
+    
+ 
+    public boolean lemonadeChange(int[] bills) {
+        if (bills[0]!=5){
+            return false;
+        }
+        int cash;
+        int five = 0;
+        int ten = 0;
+       for (int i = 0; i < bills.length;i++){
+           cash = bills[i];
+           if (cash ==5){
+               five++;
+           }
+           if(cash ==10){
+               if (five >0){
+                     five--;
+               ten++;
+               }else{
+                   return false;
+               }
+             
+           }
+           if (cash ==20){
+               if (ten > 0 && five >0){
+                   ten--;
+                   five--;
+               }else{
+                   if (five >=3){
+                       five -=3;
+                   }else{
+                       return false;
+                   }
+               }
+           }
+       }
+        return true;
+    }
+}
