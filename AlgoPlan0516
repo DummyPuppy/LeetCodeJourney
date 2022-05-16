@@ -1,0 +1,104 @@
+#Summary ranges
+##way of thinking:
+-divide the array of sorted int into a shortest list of arrays that can contain all int.
+-if num[i+1] ==num[i]+1, then put them in the same array
+-if not, let it start a new array
+
+class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        List<String> answer = new ArrayList();
+        int start;
+        int end;
+        for (int j =0 ;j <=nums.length-1;j++){
+            start = nums[j];
+            while( j+1 < nums.length && nums[j+1] ==nums[j]+1){
+                j++;
+            }
+            end = nums[j];
+            if(start !=end){
+                answer.add(""+start+"->"+end);
+            }else{
+                answer.add(""+start);
+            }
+
+            
+        }
+        return answer;
+    }
+}
+
+#smallest range
+##way of thinking:
+To find the minimum score of an array of integers, we need to find its max and min value and try to see if deducing twice the gap k (2k) is possible;
+-find the max and min values of the array
+-if max-min >= 2*k, we can deduce k from the max and add k to the min to narrow down the score
+-if max-min - 2k <0, it means we can reach a point where we do not need to deduce/add k to make them even. then we have a 0 result
+
+class Solution {
+    public int smallestRangeI(int[] nums, int k) {
+        int maxi=0;
+        int mini=10000;
+        for (int j =0;j<nums.length;j++){
+            if (nums[j] >maxi){
+                maxi = nums[j];
+            }
+            if (nums[j]<mini){
+                mini = nums[j];
+            }
+        }
+        int score = maxi-mini;
+        if (score -2 *k >=0){
+            return score-2*k;
+        }else{
+            return 0;
+        }
+        
+    }
+}
+
+
+#subdomain visit count
+count the total number of visits to each domain and its subdomains and add them up!!
+-find the root domain and its count;
+-in each root domain, find its sub domain by finding '.' in the string;
+-for each sub domain, add the root domain count;
+
+class Solution {
+    public List<String> subdomainVisits(String[] cpdomains) {
+        Map<String,Integer> map = new HashMap();
+        List<String> li = new ArrayList();
+        String[] cp ;
+        String addr;
+        String sub;
+        int num;
+        for (String s: cpdomains){
+            cp= s.split(" ");
+            addr = cp[1];
+            num = Integer.parseInt(cp[0]);
+            if (! map.containsKey(cp[1])){
+
+                map.put(addr,num);
+            }else{
+                map.put(addr,map.get(addr)+num);
+            }
+            for ( int i=0; i < addr.length();i++){
+                if (addr.charAt(i) =='.'){
+                    sub = addr.substring(i+1,addr.length());
+                    if (! map.containsKey(sub)){
+                        map.put(sub, num);
+                    }else{
+                        map.put(sub,map.get(sub)+num);
+                    }
+                }
+            }
+            
+        }
+        String value;
+        for (Map.Entry<String,Integer> entry: map.entrySet()){
+            value = entry.getValue()+" "+entry.getKey();
+            li.add(value);
+        }
+        
+        return li;
+    }
+}
