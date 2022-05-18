@@ -1,0 +1,80 @@
+#largest triangle
+
+##loop over the list of int[] and find the triangle with the largest area
+
+class Solution {
+    public double getArea(int[] x, int[] y, int[] z){
+        double xy= Math.sqrt(Math.pow((x[0]-y[0]),2)+ Math.pow((x[1]-y[1]),2));
+        double xz= Math.sqrt(Math.pow((x[0]-z[0]),2)+ Math.pow((x[1]-z[1]),2));
+        double yz= Math.sqrt(Math.pow((z[0]-y[0]),2)+ Math.pow((z[1]-y[1]),2));
+        double p = (xy+xz+yz)/2;
+        double area = Math.sqrt(p*(p-xy)*(p-yz)*(p-xz));
+        return area;
+    }
+    public double largestTriangleArea(int[][] points) {
+        if (points.length <3){
+            return 0.0;
+        }
+        int[] x;
+        int[] y;
+        int[] z;
+        double max_area = 0.0;
+        double temp ;
+        for (int i = 0; i < points.length;i++){
+            x = points[i];
+            for (int j = i+1; j < points.length; j++){
+                y = points[j];
+                for (int k = j+1; k < points.length; k++){
+                    z = points[k];
+                    temp = getArea(x,y,z);
+                    if (temp > max_area ){
+                        max_area = temp;
+                    }
+                }
+            }
+        }
+     return max_area;   
+    }
+}
+
+#find max perimeter of a triangle from a list of int
+
+##key idea:
+- sort the array, start from the largest numbers
+- if the largest three numbers cannot form a triangle, it is because the largest value is too large. we should sub the largest one, so we shift down
+- when we reach a solution it must be the largest solution, so just return the value and break the loop~
+class Solution {
+    public boolean checkTriangle(int a,int b, int c){
+        if (a +b >c+0.1){
+            if (a+c >b+0.1){
+                if (b+c >a+0.1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public int largestPerimeter(int[] nums) {
+        if (nums.length <3){
+            return 0;
+        }
+        int p = 0;
+        boolean cool = true;
+        Arrays.sort(nums);
+        int idx =3;
+        int a ;
+        int b;
+        int c;
+        for (int i =nums.length-1;i>=2;i--){
+            a = nums[i];
+            b = nums[i-1];
+            c = nums[i-2];
+            if (checkTriangle(a,b,c)){
+                p = a+b+c;
+                break;
+            }
+        }
+        return p;
+    }
+}
