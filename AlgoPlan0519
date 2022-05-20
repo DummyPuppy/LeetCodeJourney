@@ -1,0 +1,50 @@
+#sum games
+##key idea:
+1.identify simple cases when the question marks are on the same side and when it can never reach a balance
+2.consider difficult cases when there is possible to balance both sides
+3.sense their options and we would see the key idea is:
+  -if half of the ? to fill can make up for the difference
+  -if alice can make a final move so to destroy bob's plan
+
+class Solution {
+    public boolean sumGame(String num) {
+        int half = num.length()/2;
+        int left_sum = 0;
+        int right_sum =0;
+        int left_q = 0;
+        int right_q = 0;
+        
+        for (int i = 0; i < num.length();i++){
+            if ( i < half){
+                if (num.charAt(i)!='?'){
+                    left_sum+=num.charAt(i)-'0';
+                }else{
+                    left_q ++;
+                }
+            }else{
+                if (num.charAt(i)!='?'){
+                    right_sum +=num.charAt(i)-'0';
+                }else{
+                    right_q++;
+                }
+            }
+        }
+        System.out.print(half+" "+left_sum + " "+ right_sum);
+        if(left_sum >= right_sum && left_q > right_q ){
+            return true;
+        }
+        
+       if (left_sum  <= right_sum && left_q < right_q){
+            return true;
+        }
+        int diff = Math.abs(left_sum - right_sum);
+        int cnt_diff = Math.abs(left_q-right_q);
+        if ((cnt_diff*9 /2) !=diff | cnt_diff % 2 !=0 ){
+            return true;
+        }
+        
+        return false;
+
+
+    }
+}
