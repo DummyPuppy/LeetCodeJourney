@@ -1,0 +1,45 @@
+# delete one to make a strictly increasing array
+##key idea:
+- see if there is a bump/dent in the array;
+- if it is a bump getting less, then delete num[i+1] and check monotonicity
+- if it is a dent getting more, then delete num[i];
+
+
+
+class Solution {
+    public boolean checkIncrease(int[] nums){
+        for (int i =0;i < nums.length-1;i++){
+            if (nums[i]>=nums[i+1]){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean canBeIncreasing(int[] nums) {
+        int[] nums2 = new int[nums.length-1];
+        if (nums.length <=2){
+            return true;
+        }
+        nums2[0] = nums[0];
+        for (int i = 1; i< nums.length-1;i++){
+            if (nums[i] < nums[i+1] ){
+                nums2[i] = nums[i];
+            }else{
+                if (nums[i-1] < nums[i+1]){
+                    for (int k = i;k < nums.length-1;k++){
+                    nums2[k] = nums[k+1];
+                }
+                return checkIncrease(nums2);
+                }else{
+                    nums2[i] = nums[i];
+                    for (int k = i+1;k <nums.length-1;k++){
+                        nums2[k] = nums[k+1];
+                    }
+                    return checkIncrease(nums2);
+                }
+              
+            }
+        }
+     return true;
+    }
+}
