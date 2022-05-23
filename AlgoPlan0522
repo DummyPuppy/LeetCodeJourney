@@ -1,0 +1,31 @@
+#remove duplicate from an array
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int len = nums.length;
+        System.out.print(len);
+        int indx = 0;
+        if (len ==1){
+            return 1;
+        }
+        while(indx < len-1){
+            if (nums[indx] == nums[indx+1]){
+        
+                len--;
+                for (int k = indx+1; k < len; k++){
+                    nums[k] = nums[k+1];
+                }  
+                nums[len] = 101;
+
+            
+            }else{
+                //do nothing
+                indx++;
+            
+            }
+
+        }
+        System.out.print(len);
+        return len;
+    }
+}
