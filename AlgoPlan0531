@@ -1,0 +1,69 @@
+# Minimum Subsequence in Non-Increasing Order
+##key idea:
+- select the largest value from the nums array
+- add them till it satisfies the requirement
+- boom
+
+class Solution {
+    public List<Integer> minSubsequence(int[] nums) {
+        Arrays.sort(nums);
+        int subsum = 0;
+        int remainsum = 0;
+        for (int i =0;i<nums.length;i++){
+            remainsum+=nums[i];
+        }
+        List<Integer> result = new ArrayList();
+        int cursor = nums.length-1;
+        while (subsum <= remainsum){
+            result.add(nums[cursor]);
+            subsum+=nums[cursor];
+            remainsum -=nums[cursor];
+            cursor--;
+        }
+        return result;
+    }
+}
+
+#count hills and valleys in an array
+##key idea:
+ - to find nearest non-equal nodes
+    -if the nearest left node is not equal to index, assign it to be the left one; otherwise, no assignment
+    -if the nearest right node is not equal to index, assign it to be the right one; otherwise, assign index to the right one
+    -initiate left and right to be num[0] and num[1]
+    
+class Solution {
+    public int countHillValley(int[] nums) {
+        int count =0;
+        int indx = 0;
+        int nearleft = nums[0];
+        int nearright =nums[1];
+        while (indx< nums.length){
+            if (indx ==0 || indx ==nums.length-1){
+                //pass
+            }else{
+                if (nums[indx-1] !=nums[indx]){
+                    nearleft = nums[indx-1];
+                }else{
+                    //no movement
+                }
+                if ( nums[indx+1] != nums[indx]){
+                    nearright = nums[indx+1];
+                }else{
+                    nearright = nums[indx];
+                }
+             
+               if (nearleft < nums[indx] && nums[indx] > nearright){
+                    count++;
+                    System.out.print(" there is a hill at "+ indx);
+                }
+                if (nearleft >nums[indx] && nums[indx]< nearright){
+                    count++;
+                    System.out.print(" there is a valley at "+ indx);
+                }  
+            }
+            indx++;
+            
+        }
+        return count;
+    }
+}
