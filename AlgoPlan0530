@@ -1,0 +1,60 @@
+#Minimum Time to Collect All Apples in a Tree
+##key idea:
+  - we should use depth first search: dfs: always go to the leaves
+  - when to add time: 1. when the node has an apple; 2. when the children/grandchildren ... have any apple;
+  - the time need to be double
+  - an array of list to contain the edges from both directions and need to check if a node is visited, only count the children of unvisited nodes.
+  
+class Solution {
+    public int minTime(int n, int[][] edges, List<Boolean> hasApple) {
+        List<Integer>[] tree = new ArrayList[n];
+        boolean[] visited = new boolean[n];
+        //first, convert the arrays to an array of lists
+        for (int k=0;k <n;k++){
+            tree[k] = new ArrayList();
+        }
+        for (int[] edge: edges){
+            tree[edge[0]].add(edge[1]);
+            tree[edge[1]].add(edge[0]);
+        }
+
+        //second, traverse from vertext 0 and to the deepest branch
+        int time = 0;
+        int begin = 0;
+        int result = dfs(begin, tree, hasApple, visited);
+        return result*2;
+
+        
+        
+        
+    }
+    
+    public int dfs(int begin, List<Integer>[] tree,
+                   List<Boolean> hasApple, boolean[] visited){
+        visited[begin] = true;
+        int time = 0;
+
+
+        //check if this node has children
+            //the apple number of its children
+               int cost = 0;
+            for (int neighbor: tree[begin]){
+                //go through its children and its cost 
+                if (visited[neighbor]!=true){
+                     cost += dfs(neighbor, tree, hasApple, visited);
+                }
+                
+            } 
+            //cost of all its children
+            if (cost >0 || hasApple.get(begin)){
+                if(begin ==0){
+                    time +=cost;
+                }else{
+                    time+=cost+1;
+                }
+            }
+            
+         
+        return time;
+    }
+}
