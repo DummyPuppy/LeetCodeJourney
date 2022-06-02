@@ -51,3 +51,27 @@
         return true;
     }
 }
+
+#add the sum of all sub-arrays
+
+##key idea:
+- sub array !=  sub sequence, sub arrays have the same order in the array
+- count the number of sub-array that can start with the int;
+- count the number of sub-array that can end with the int;
+- multiply start and end, and if it is odd, add 1 and divide by 2, if it is even, just divide by 2;
+
+class Solution {
+    
+    public int sumOddLengthSubarrays(int[] arr) {
+        int result = 0;
+        int se =1;
+        int len = arr.length;
+        int count = 0;
+        for (int k = 0; k < len;k++){
+            se = (len-k) * (k+1);
+            count = se % 2 ==0? se/2: (se+1)/2;
+            result += arr[k]*count;
+        }
+        return result;
+    }
+}
