@@ -1,0 +1,47 @@
+# X of a deck of cards
+
+##key idea:
+- find common denominator of all counts of different numbers.
+- fcd: if int !=0 find its modulus against the other int, and find the cd of the modulus against the other int again (recursive)
+- compare current value with the next value, store its common denominator. as long as the cd is >= 2, should be fine.
+class Solution {
+    public boolean hasGroupsSizeX(int[] deck) {
+        Map<Integer,Integer> map = new HashMap();
+        for (int k = 0; k<deck.length;k++){
+            if (map.containsKey(deck[k])){
+                map.put(deck[k], map.get(deck[k])+1);
+            }else{
+                map.put(deck[k],1);
+            }
+        }
+        int x= 0;
+        int pre = 0;
+        int temp = 0;
+        for (int value: map.values()){
+            System.out.print(" This value is "+ value);
+            if (value <2){
+                return false;
+            }else{
+                if (pre ==0){
+                    pre = value;
+                }else{
+                    temp = findcd(pre,value);
+                    if (temp <2){
+                        return false;
+                    }else{
+                        x = temp;
+                    }
+                    pre = value;
+                }
+            }
+        }
+        return true;
+    }
+    //all larger  than 2
+    public int findcd(int a, int b){
+        if (a ==0){
+            return b;
+        }
+        return findcd(b% a, a);
+    }
+}
