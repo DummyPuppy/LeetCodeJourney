@@ -64,3 +64,63 @@ class Solution {
         return count;
     }
 }
+
+
+#palindrome number 
+##see if a number reads the same reversely
+
+class Solution {
+    public boolean isPalindrome(int x) {
+        String s = String.valueOf(x);
+        int len = s.length();
+        if (len %2 ==0){
+            for ( int k = 0; k < len/2; k++){
+                if (s.charAt(k) !=s.charAt(len-k-1)){
+                    return false;
+                }
+            }
+        }else{
+            for (int k = 0 ; k < len/2+1;k++){
+                if (s.charAt(k) !=s.charAt(len-k-1)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+#palindrome linked list
+##key idea
+-use the poll first and last function of linked list
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        LinkedList<ListNode> list = new LinkedList();
+        ListNode temp = head;
+        while (temp !=null){
+            list.add(temp);
+            temp = temp.next;
+        }
+        ListNode front;
+        ListNode back;
+       while (list.size()>1){
+           front = list.pollFirst();
+           back = list.pollLast();
+           if (front.val !=back.val){
+               return false;
+           }
+       }
+        return true;
+    }
+}
