@@ -1,0 +1,66 @@
+##open the lock
+##not finished
+
+
+class Solution {
+    public int openLock(String[] deadends, String target) {
+        if (target.equals("0000")){
+            return 0;
+        }
+        String lock = "0000";
+        //got a node starts with 0000 
+        List<String> deads = new ArrayList();
+        for (String s: deadends){
+            deads.add(s);
+        }
+        //got a list of dead ends
+        int count = 0;
+        List<String> visited = new ArrayList();
+        visited.add("0000");
+        int result = bfs(target,lock,deads,count,visited);
+        if (result ==0){
+            return -1;
+        }else{
+            return result;
+        }
+        
+    }
+    public int bfs(String target, String lock,
+                   List<String> deads,int count,
+                   List<String> visited){
+        List<String> children = new ArrayList();
+        String temp ="";
+        char[] lockchar = lock.toCharArray();
+       //find the children of the lock
+        for (int k =0; k < 4;k++){
+            lockchar[k] = (char) ((lockchar[k]-'0'+1) % 10);
+            temp = String.valueOf(lockchar);
+            if (!deads.contains(temp) && !visited.contains(temp))
+                children.add(temp);
+            lockchar[k] = (char) ((lockchar[k]-'0'-1) % 10+ 10);
+            temp = String.valueOf(lockchar);
+            if (!deads.contains(temp) && !visited.contains(temp))
+                children.add(temp);
+
+        }
+        // for (String child:children){
+        //          System.out.print(child+ " ");
+        // }
+        
+        for (String child : children){
+                //if it is not dead end, is it the target
+                if (child == target){
+                    count++;
+                    break;
+                }else{
+                    //if it is not dead end, it is not the target, keep looking through its children
+                    visited.add(child);
+                    // System.out.print(" go to "+ child);
+                    count =bfs(target, child, deads,count,visited);
+                    // System.out.print(" go out from "+ child);
+                }
+                count++;
+        }
+        return count;
+    }
+}
