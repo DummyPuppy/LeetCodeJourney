@@ -1,0 +1,34 @@
+#count good strings
+##key idea:
+- use maps to store counts of different characters
+- loop over the string
+
+class Solution {
+    public boolean isGoodString(String s){
+        Map<Character,Integer> map = new HashMap();
+        for (int k = 0; k < s.length();k++){
+            if (!map.containsKey(s.charAt(k))){
+                map.put(s.charAt(k),1);
+            }else{
+                map.put(s.charAt(k), map.get(s.charAt(k))+1);
+            }
+        }
+        for (int k : map.values()){
+            if (k >1){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int countGoodSubstrings(String s) {
+        String temp = "";
+        int count = 0;
+        for (int k = 0; k<= s.length()-3 ; k++){
+            temp =  s.substring(k, k+3);
+            if (isGoodString(temp)){
+                count++;
+            }
+        }
+        return count;
+    }
+}
