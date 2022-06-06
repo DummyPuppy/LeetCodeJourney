@@ -32,3 +32,39 @@ class Solution {
         return count;
     }
 }
+
+
+#create k palindrome strings
+##key idea: 
+- if the # of characters <k, cannot;
+- if the # of characters who have odd counts > k, which means some of the characters cannot be placed at centers or in pair, cannot;
+- all the other cases, it is plausible.
+
+class Solution {
+    public boolean canConstruct(String s, int k) {
+        if (s.length() <k){
+            return false;
+        }
+        
+        Map<Character, Integer> map = new HashMap();
+        char temp;
+        for (int i = 0;i < s.length();i++){
+            temp = s.charAt(i);
+            if (map.containsKey(temp)){
+                map.put(temp,map.get(temp)+1);
+            }else{
+                map.put(temp,1);
+            }
+        }
+        int notoddcount=0;
+        for (int count: map.values()){
+            if (count %2 !=0 ){
+                notoddcount++;
+            }
+        }
+        if (notoddcount >k){
+            return false;
+        }
+        return true;
+    }
+}
