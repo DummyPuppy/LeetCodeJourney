@@ -65,3 +65,58 @@ class Solution {
         return result;
     }
 }
+
+
+#binary tree path
+##it is a root-leaf depth first search
+- the key is to reset the whole value when it comes to another branch
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    public void dfs(TreeNode root,String temp,List<String> list){
+        String origin = temp;
+        TreeNode cur = root;
+        if (root.left ==null && root.right ==null){ 
+            list.add(origin);}
+        if (root.left !=null){
+            root = root.left;
+            temp +="->"+root.val;
+            dfs(root,temp,list);
+        }
+        temp = origin;
+        root = cur;
+        if (root.right != null){
+            root = root.right;
+            temp +="->"+ root.val;
+            dfs(root,temp,list);
+        }
+        
+    }
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> list = new ArrayList();
+        String temp ="";
+        TreeNode cur = root;
+
+        temp += cur.val;
+        dfs(cur,temp,list);
+        return list;
+
+        
+        
+    }
+}
