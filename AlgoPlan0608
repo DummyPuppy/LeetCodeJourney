@@ -44,3 +44,68 @@ class Solution {
         return result;
     }
 }
+
+
+#find intersection of arrays
+##find intersection of int in both arrays.
+- use the smaller array to store a map of num vs count
+- loop over the second array and -- when found one
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        if (nums1.length>nums2.length){
+            intersect(nums2,nums1);
+        }
+        Map<Integer,Integer> map = new HashMap();
+        for (int num: nums1){
+            if(map.containsKey(num)){
+                map.put(num,map.get(num)+1);
+            }else{
+                map.put(num,1);
+            }
+        }
+        int count =0;
+        List<Integer> alist = new ArrayList();
+        for (int num: nums2){
+            count = map.getOrDefault(num,0);
+            if (count >0){
+                alist.add(num);
+                map.put(num, map.get(num)-1);
+            }
+        }
+        int[] intersection = new int[alist.size()];
+        for (int k =0; k <  alist.size();k++){
+            intersection[k] = alist.get(k);
+        }
+        return intersection;
+    }
+}
+
+#find intersection of two arrays (unique ones)
+
+class Solution {
+    public int[] intersection(int[] nums1, int[] nums2) {
+        if (nums1.length > nums2.length){
+            intersection(nums2,nums1);
+        }
+        List<Integer> set= new ArrayList();
+        for (int k : nums1){
+            if (!set.contains(k)){
+                set.add(k);
+            }
+        }
+        
+        Set<Integer> list = new HashSet();
+        for (int j : nums2){
+            if (set.contains(j) && !list.contains(j)){
+                list.add(j);
+            }
+        }
+        int m = 0;
+        int[] result = new int[list.size()];
+        for (int ele: list){
+            result[m++] = ele;
+        }
+        return result;
+    }
+}
