@@ -109,3 +109,46 @@ class Solution {
         return result;
     }
 }
+
+#count common strings in two arrays
+##idea:
+-use two hashmaps where the second one filter strings based on the first map
+-count the number of one-occurence strings in the second map
+
+class Solution {
+    public int countWords(String[] words1, String[] words2) {
+        //the shortest array
+        if(words1.length > words2.length){
+            countWords(words2, words1);
+        }
+        
+        Map<String, Integer> words = new HashMap();
+        for (String s: words1){
+            if (!words.containsKey(s)){
+                words.put(s, 1);
+            }else{
+                words.put(s,words.get(s)+1);
+            }
+        }
+        Map<String, Integer> newmap = new HashMap();
+        for (String k: words2){
+            //if it only appears once in the first array
+            if (words.containsKey(k) && words.get(k) ==1){
+                //++ so the next time it hits the map,
+                //it means it also appears in the second one
+                if (newmap.containsKey(k)){
+                    newmap.put(k, newmap.get(k)+1);
+                }else{
+                    newmap.put(k,1);
+                }
+            }
+        }
+        int count = 0;
+        for (String k: newmap.keySet()){
+            if (newmap.get(k)==1){
+                count++;
+            }
+        }
+        return count;
+    }
+}
