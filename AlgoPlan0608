@@ -1,0 +1,46 @@
+#find common characters
+
+##idea:
+- create a hash table (using hashmap) for each word, and count the characters
+- for each character in the first word, loop over each map to see if it is in the key set
+- if it is in the key set, deduce the value by one till it is zero
+- clear out each map
+- when counting if one character appears in each map, count its appearance and return the count to zero after each character
+
+
+class Solution {
+    public List<String> commonChars(String[] words) {
+        Map<Character, Integer> map = new HashMap();
+        List<Map<Character,Integer>> list = new ArrayList();
+        List<String> result = new ArrayList();
+        for (String s: words){
+            for (char c: s.toCharArray()){
+                if (map.containsKey(c)){
+                    map.put(c, map.get(c)+1);
+                }else{
+                    map.put(c,1);
+                }
+            }
+            list.add(map);
+            for (int k: map.values()){
+                System.out.print(k+", ");
+            }
+            System.out.print(" // ");
+            map = new HashMap();
+        }
+        int count = 0;
+        for (char c: words[0].toCharArray()){
+            for (Map<Character,Integer> wordmap: list){
+                if (wordmap.containsKey(c) && wordmap.get(c) >0){
+                    count++;
+                    wordmap.put(c, wordmap.get(c)-1);
+                }else{
+
+                }
+            }
+            if (count == words.length) result.add(String.valueOf(c));
+            count =0;
+        }
+        return result;
+    }
+}
