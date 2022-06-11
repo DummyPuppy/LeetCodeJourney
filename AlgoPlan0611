@@ -1,0 +1,62 @@
+#coin change
+##dynamic programming
+-bottom up approach: we have calculated the bottom count, and continue with using the previous min count value
+-create an array to store the number of coins used to reach this amount using the coins provided
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] ans = new int[amount+1];
+        for (int k = 0; k < amount; k ++){
+            ans[k+1] = amount+1;
+        }
+        for (int i = 0; i < ans.length; i++){
+            for ( int m =0; m < coins.length; m++){
+                if ( i >=coins[m]){
+                    ans[i] = Math.min(ans[i], 1+ans[i-coins[m]]);
+                }
+            
+            }
+        }
+        if (ans[amount] != amount+1){
+            return ans[amount];
+        }else{
+            return -1;
+        }
+    }
+}
+
+#count min steps to get to the correct time
+#similar to coin change, consider it a dp problem
+#to reach each stage we need how many counts? and cache that for further reference
+
+class Solution {
+    public int convertTime(String current, String correct) {
+        if (current == correct){
+            return 0;
+        }
+        String[] time1 = current.split(":");
+        String[] time2 = correct.split(":");
+        int minute1 = Integer.parseInt(time1[0]) * 60 + Integer.parseInt(time1[1]);
+        int cortime = Integer.parseInt(time2[0]) * 60 + Integer.parseInt(time2[1]);
+        System.out.print("current time in minutes is:" + minute1);
+        System.out.print("\n correct time in minutes is:" + cortime);
+        int interval = cortime - minute1;
+        List<Integer> time = new ArrayList();
+        time.add(1);
+        time.add(5);
+        time.add(15);
+        time.add(60);
+        int[] period = new int[interval+1];
+        for (int i = 1; i < period.length;i++){
+            period[i] = interval+1;
+        }
+        for (int k = 0; k < period.length; k++){
+            for (int m : time){
+                if (k - m >=0){
+                    period[k] = Math.min(period[k], period[k-m]+1);
+                } 
+            }
+        }
+        return period[interval];
+    }
+}
