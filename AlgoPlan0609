@@ -1,0 +1,77 @@
+# kth distinct string in an array
+
+#use hashmap to store string vs counts
+#use count and array to see if it is the kth one
+
+class Solution {
+    public String kthDistinct(String[] arr, int k) {
+        Map<String, Integer> map = new HashMap();
+        for(String s: arr){
+            if(!map.containsKey(s)){
+                map.put(s,1);
+            }else{
+                map.put(s, map.get(s)+1);
+            }
+        }
+        int count =0;
+        for (String m: arr){
+            if (map.get(m)==1){
+                count++;
+                if(count ==k){
+                    return m;
+                }
+            }
+        }
+        return "";
+    }
+}
+
+#minimun cost of tickets
+
+##key idea
+-dynamic programming
+-depth first search
+
+class Solution {
+    public int mincostTickets(int[] days, int[] costs) {
+        //get the cost values
+        int oneday = costs[0];
+        int sevenday =  costs[1];
+        int thirtyday = costs[2];
+        //know the day length
+        int n = days.length;
+        int[] dp = new int[n+1]; //to store daily cost
+        for (int i =0; i<n;i++){
+            dp[i] = 365*oneday;
+        }
+        int d7 ;
+        int d30 ;
+        //two ways to do it 
+        //the first way: start calculating from the last day
+        for (int i = n-1;i >=0;--i){
+            d7 = i;
+            d30 = i;
+            while (d7 < n && days[d7]< days[i]+7) ++d7;
+            while (d30 < n && days[d30] < days[i]+30) ++d30;
+            dp[i] = Math.min(oneday+dp[i+1],Math.min(sevenday+dp[d7], thirtyday+ dp[d30]));
+        }
+        //the second way, start from day one
+        for (int i = 0; i < n;i++){
+            d7 = i;
+            d30 = i;
+            //while the next few days from current day is within a week
+            //go till it is out of the week
+            while (d7< n && days[d7] <days[i]+7) ++d7;
+            //while the next few days are within a month
+            //go till it is out of the month
+            while( d30 < n && days[d30] < days[i]+30) ++d30;
+            //once it is out of a week || out of a month
+            //calculate the current smallest value by
+            //1. add one day pass and the cost after today
+            //2. add seven day pass and the cost after seven days
+            //3. add 30 day pas and the cost after 30 days.
+            dp[i] = Math.min(oneday+ dp[i+1],Math.min(sevenday+dp[d7],thirtyday +dp[d30]));
+        }
+        return dp[0];
+    }
+}
