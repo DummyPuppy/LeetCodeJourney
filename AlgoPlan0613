@@ -1,0 +1,54 @@
+#create equal arrays
+##key idea: use map to store counts of integers and see if they are all in even numbers.
+
+class Solution {
+    public boolean divideArray(int[] nums) {
+        Map<Integer,Integer> map = new HashMap();
+        for( int k : nums){
+            if (map.containsKey(k)){
+                map.put(k, map.get(k)+1);
+            }else{
+                map.put(k,1);
+            }
+        }
+    
+        for(int k : map.keySet()){
+            if (map.get(k) % 2 ==1){
+                return false;
+            }
+        }
+
+        return true;
+        
+    }
+}
+
+#sort an array  based on frequency
+##key idea:
+- use map to store counts
+- utilize stream and the comparator to make sure the count is based on frequencies
+- each integer should appear as many times as they were in the original array
+
+
+class Solution {
+    public int[] frequencySort(int[] nums) {
+        int[] result;
+        Map<Integer,Integer> counts = new HashMap<>();
+        //first count the frequencies of each number
+        for (int k: nums){
+            counts.put(k, counts.getOrDefault(k,0)+1);
+        }
+        //use a stream
+        //give the comparator the key to compare
+        //if the two numbers have the same counts, compare their keys;
+        //if not, compare their values;
+        //map the set result to a list where there are copies
+        //map to integer and to array
+        result = counts.entrySet().stream().sorted((Map.Entry< Integer,Integer > a ,
+                Map.Entry<Integer,Integer> b) ->
+            (a.getValue() ==b.getValue()) ? b.getKey() - a.getKey() : a.getValue() - b.getValue()).flatMap(
+                    entry -> Collections.nCopies(entry.getValue(),entry.getKey()).stream()).mapToInt(v->v).toArray();
+        return  result;
+        
+    }
+}
