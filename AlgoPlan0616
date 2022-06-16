@@ -1,0 +1,28 @@
+#number of different integers in a string
+##key idea:
+- replace all non-integer character with " "
+- if the string is  too long, just store the string else parse it to int
+
+class Solution {
+    public int numDifferentIntegers(String word) {
+        String s =word.replaceAll("\\D+"," ").trim();
+        if (s.length() ==0){
+            return 0;
+        }
+        Set<Integer> set = new HashSet();
+        Set<String> strset = new HashSet();
+        int mo; 
+        int diff = -99;
+        String[] l = s.split("\\s");
+        for (String k : l){
+            if (k.length()>=10){
+                strset.add(k);
+            }else{
+                System.out.println(k+" ");
+                mo = Integer.parseInt(k);
+                set.add(mo);
+            }
+        }
+        return set.size()+strset.size();
+    }
+}
