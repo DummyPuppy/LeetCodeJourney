@@ -1,0 +1,86 @@
+#get string from column numbers of an excel sheet
+
+#key idea:
+-know the relationship between number and column character representation
+
+class Solution {
+    
+    public String convertToTitle(int columnNumber) {
+        StringBuilder  s = new StringBuilder();
+        char c;
+        //to store temperary values
+        //while column number >0
+        while(columnNumber >0){
+            //minus 1 because when it is 1, it is A -> 65, so it would be 
+            //0+ 65
+            
+            columnNumber--;
+            //if columnNumber % 26 has modulus, it would be the 
+            //extra value beginning from A
+            c=  (char)('A'+columnNumber %26);
+            //add it to the string
+            s.append(c);
+            //get its denominator 
+            //if it is AB, 28 /26 = 1,  get the extra value of the second character
+            columnNumber = columnNumber / 26;
+            
+        }
+      
+        return s.reverse().toString();
+        
+    }
+}
+
+#count cells in a spreadsheet area
+##key idea:
+-get char and int initial value from k1:l2 
+-put column loop outside of row loop
+
+
+class Solution {
+    public List<String> cellsInRange(String s) {
+        String[] cells = s.split(":");
+        char col1 = cells[0].charAt(0);
+        int row1 = cells[0].charAt(1)-'0';
+        char col2 = cells[1].charAt(0);
+        int row2 = cells[1].charAt(1)-'0';
+        List<String> list = new ArrayList();
+        String temp = "";
+        for (char j = col1;j <=col2;j++){
+          for (int k = row1;k<=row2;k++)  {
+                temp = j+String.valueOf(k) ;
+                list.add(temp);
+            }
+        }
+        return list;
+    }
+}
+
+
+#sort cells by its distrance to a center point
+
+(not solved!)
+
+class Solution {
+    public int[][] allCellsDistOrder(int rows, int cols, int rCenter, int cCenter) {
+     
+        int[][] result = new int[cols*rows][2];
+        int[] holder = new int[2];
+        int currentdist = 0;
+        Map<int[],Integer> map = new HashMap();
+        for (int k =0 ; k < rows;k++){
+            for (int j = 0; j <cols; j++){
+                holder[0] = k;
+                holder[1] = j;
+                map.put(holder, currentdist);
+            }
+        }
+        int pos = 0;
+        List<int[]> sorted = map.entrySet().stream().sorted(Map.Entry.comparingByValue()).map(Map.Entry::getKey).toList();
+        Collections.reverse(sorted);
+        for (pos=0;pos< sorted.size();pos++){
+            result[pos] = sorted.get(pos);
+        }
+        return result;
+    }
+}
