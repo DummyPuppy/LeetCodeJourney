@@ -1,0 +1,38 @@
+#roman string
+##key idea
+-use a map to store those roman letter to values
+-compare k and k-1 character, and check the last one separately.
+-when it is a two-character value, use subtraction and skip one 
+class Solution {
+    public int romanToInt(String s) {
+        Map<Character,Integer> map = new HashMap();
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+        char c;
+        char h;
+        int value =0;
+        for (int k = s.length()-1; k>=0; k--){
+            if (k ==0){
+                value+=map.get(s.charAt(k));
+                break;
+            }
+            c = s.charAt(k);
+            h = s.charAt(k-1);
+            if (map.get(c) > map.get(h)){
+                value +=map.get(c) - map.get(h);
+                //here is to skip the front one
+                k--;
+            }else{
+                value+=map.get(c);
+            }
+            
+        }
+        return value;
+        
+    }
+}
