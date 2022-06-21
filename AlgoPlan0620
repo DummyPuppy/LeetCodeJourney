@@ -36,3 +36,81 @@ class Solution {
         
     }
 }
+
+#int to roman strings
+
+class Solution {
+    public String doDigit1(int digit, Map<Integer, String> map,int s,int l){
+        String result = "";
+         if(digit <4){
+            while (digit >0){
+                result +=map.get(s);
+                    digit--;
+                }
+           }else if (digit ==4){
+             result +=map.get(s);
+             result +=map.get(l);
+         }
+        return result;
+    
+    }
+    //for digit >= 5 and 
+    public String doDigit2(int digit, Map<Integer, String> map,int s,int l){
+        String result ="";
+        if (digit ==9){
+            result +=map.get(s);
+            result +=map.get(l);
+        }else{
+            result +=map.get(l/2);
+            digit  = digit-5;
+            while (digit >0){
+                result+=map.get(s);
+                digit--;
+            }
+        }
+        return result;
+    }
+
+    public String intToRoman(int num) {
+        String result = "";
+        Map<Integer, String> map = new HashMap();
+        map.put(1,"I");
+        map.put(5,"V");
+        map.put(10,"X");
+        map.put(50,"L");
+        map.put(100,"C");
+        map.put(500,"D");
+        map.put(1000,"M");
+        int tho =0;
+        int hun=0;
+        int ten = 0;
+        int digit = 0;
+            //if it is smaller than 5
+        tho = num /1000;
+        hun = num/100-tho*10;
+        ten = num/10 - tho *100 - hun *10;
+        digit = num % 10;
+        while (tho >0){
+            result +=map.get(1000);
+            tho--;
+        }
+        if (hun < 5){
+             result +=doDigit1(hun,map,100,500);
+        }else{
+            result +=doDigit2(hun,map,100,1000);
+        }
+        if (ten <5){
+            result +=doDigit1(ten,map,10,50);
+        }else{
+            result +=doDigit2(ten, map,10,100);
+        }
+        if (digit < 5){
+            result +=doDigit1(digit,map,1,5);
+        }else{
+            result+=doDigit2(digit,map,1,10);
+        }
+
+        return result;
+        
+    }
+}
