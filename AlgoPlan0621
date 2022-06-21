@@ -1,0 +1,65 @@
+#digital root 
+##key idea:
+-if num is dividable by 9, its digital root is 9;
+-if num ==0, return 0, obvs;
+-other cases, since it is not dividable by 9, we can see the remainder is gonna be num % 9
+class Solution {
+    public int addDigits(int num) {
+        if(num ==0) return 0;
+        if (num % 9 ==0) return 9;
+        return num % 9;
+    }
+}
+
+#height stacker
+##key idea:
+-create an expected line 
+-sort the line using Arrays.sort(arr)
+
+class Solution {
+    public int heightChecker(int[] heights) {
+        int[] expected = new int[heights.length];
+        for (int m =0;m < heights.length;m++){
+            expected[m] = heights[m];
+        }
+        Arrays.sort(expected);
+        int count = 0;
+        for (int k =0; k < expected.length;k++){
+            if (expected[k]!=heights[k]){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+#find shortest sub-array to sort
+
+#key idea:
+-have a sorted array
+-compare from back to front and from front to back
+
+##another solution:
+start from both ends, and check if nums[n+1] > nums[n] as it should, if not, stop and break
+
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        int begin = 0;
+        int end = nums.length-1;
+        int[] arr = new int[nums.length];
+        for (int k = 0; k < arr.length;k++){
+            arr[k] = nums[k];
+        }
+        Arrays.sort(arr);
+        for (;begin < nums.length;begin++){
+            if (nums[begin] !=arr[begin]){
+                break;
+            }
+        }
+        for (;end >=0;end--){
+            if (nums[end] !=arr[end]){
+                break;
+            }
+        }
+        return (end <= begin)? 0:end-begin+1;
+    }
+}
