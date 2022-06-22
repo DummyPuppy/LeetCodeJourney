@@ -1,0 +1,21 @@
+#duplicate zeroes
+
+class Solution {
+    public void duplicateZeros(int[] arr) {
+        List<Integer> list = new LinkedList();
+        for (int k: arr){
+            if (k ==0){
+                list.add(k);
+                list.add(0);
+            }else{
+                list.add(k);
+            }
+        }
+        int m = 0;
+        while (m < arr.length){
+            arr[m] =list.get(m);
+            m++;
+        }
+
+    }
+}
