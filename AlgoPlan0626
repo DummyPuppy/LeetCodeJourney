@@ -1,0 +1,85 @@
+#grumpy store owner
+##key idea:
+-have a base case
+-rolling the window of not-grumpy times
+
+class Solution {
+    public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
+        int satisfied = 0;
+        int max_increase = 0;
+        for (int k = 0; k < customers.length;k++){
+            if (grumpy[k] ==0) satisfied += customers[k];
+        }
+        int temp=0;
+        System.out.println("Satisfied "+ satisfied);
+        for (int i = 0; i < customers.length-minutes+1;i++){
+
+            for (int m = 0; m < minutes;m++){
+                //all satisifed
+                if (grumpy[i+m] ==1){
+                    temp +=customers[i+m];
+                }
+            }
+            if (temp > max_increase){
+                max_increase=temp;
+            }
+            temp =0;
+        }
+        System.out.println("Max increase "+ max_increase);
+        satisfied +=max_increase;
+        return satisfied;
+    }
+}
+
+#count words with a certain prefix
+class Solution {
+    public int prefixCount(String[] words, String pref) {
+        int count = 0;
+        for (String s: words){
+            if (s.startsWith(pref) ) count++;
+        }
+        return count;
+    }
+}
+
+#find index of a word in a sentence that have a certain prefix
+
+class Solution {
+    public int isPrefixOfWord(String sentence, String searchWord) {
+        String[] tokens = sentence.split(" ");
+        for (int  k =0; k < tokens.length;k++){
+            if (tokens[k].startsWith(searchWord)){
+                return k+1;
+            }
+        }
+        return -1;
+    }
+}
+
+#counts prefix of a word
+class Solution {
+    public int countPrefixes(String[] words, String s) {
+        int count =0;
+        for (String word: words){
+            if (s.startsWith(word)){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+#check if it is a prefix string of an array
+
+class Solution {
+    public boolean isPrefixString(String s, String[] words) {
+        String temp = "";
+        for (int k = 0; k < words.length;k++){
+            temp +=words[k];
+            if (temp.equals(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+}
