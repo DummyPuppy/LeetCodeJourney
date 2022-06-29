@@ -1,0 +1,42 @@
+#largest permutation
+#key idea:
+- for each ascending sub-array in the big array, find the right most first downward slope, and swap it with the largest value on its right.
+- if there is no such int, return original.
+- it is called lexigraphically larger
+
+
+class Solution {
+    private int[] swap(int[] arr, int i ,int j ){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return arr;
+    }
+    public int[] prevPermOpt1(int[] arr) {
+        int[] result = new int[arr.length];
+        int left = arr.length-1;
+        int right = 0;
+        int largest = 0;
+        for (; left >0; left--){
+            if (arr[left]< arr[left-1]){
+                //continue 
+                //get the large one is left
+                //from its right
+                //get the second largest value
+                right = left;
+                largest = left-1;
+                while (right < arr.length && arr[right]< arr[left-1]){
+                    if (arr[right] !=arr[right-1]) largest = right;
+                    right++;
+                }
+                System.out.println(left-1);
+                System.out.println(largest);
+                result = swap(arr,left-1,largest);
+                return result;
+            }else{
+              //continue
+            }
+        }
+        return arr;
+    }
+}
