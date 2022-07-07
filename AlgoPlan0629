@@ -53,3 +53,48 @@ class MinStack {
  * int param_3 = obj.top();
  * int param_4 = obj.getMin();
  */
+
+
+#unsolved re-route roads
+class Solution {
+    
+    public int dfs(int[][] connections, int node,boolean[] reachable,int count){
+        for (int neighbor: map[node]){
+            if (reachable[neighbor] ){
+                //if this node is reachable, look through its neighbors
+            }else{
+                //if this node is not reachable to city 0;
+                count++;
+                //re-orient this one, coz it just comes from a reachable neighbor;
+                reachable[neighbor] =true;
+                //now it is reachable
+               
+                
+            }
+            count = dfs(map,neighbor,reachable,count);
+        }
+        return count;
+        }
+
+
+    public int minReorder(int n, int[][] connections) {
+        int count = 0;
+        int node = 0;
+        boolean[] reachable = new boolean[n];
+        System.out.print(reachable[1]); //false
+        ArrayList<Integer>[] map = new ArrayList[n];
+        for (int m = 0; m < n;m++){
+            map[m] = new ArrayList();
+        }
+        reachable[0] = true;
+        //get the list of neighbors
+        for(int[] edge: connections){
+            map[edge[1]].add(edge[0]);
+            if (edge[1] ==0 ){
+                reachable[edge[0]] =true;
+            }
+        }
+        count = dfs(map,0,reachable,count);
+        return count;
+    }
+}
