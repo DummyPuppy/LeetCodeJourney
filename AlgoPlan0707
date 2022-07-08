@@ -1,0 +1,28 @@
+#max product of two nums in an array
+class Solution {
+    public int maxProduct(int[] nums) {
+        int max = 0;
+        for (int k = 0; k < nums.length-1;k++){
+            for (int j = k+1; j < nums.length;j++){
+                if ((nums[k]-1)* (nums[j]-1) > max){
+                    max = (nums[k]-1)* (nums[j]-1) ;
+                }
+            }
+        }
+        return max;
+    }
+}
+
+#distribute candies
+class Solution {
+    public int distributeCandies(int[] candyType) {
+        Set<Integer> candyset = new HashSet<>();
+        for (int k : candyType){
+            candyset.add(k);
+        }
+        int count = candyType.length/2;
+        return Math.min(candyset.size(), count);
+
+    }
+}
+
