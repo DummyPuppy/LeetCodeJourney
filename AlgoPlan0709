@@ -1,0 +1,139 @@
+#rotate the stones
+#key idea:
+-consider stones moving right rather than moving down
+-look for consecutive empty spots until we hit a non-empty spot.
+
+class Solution {
+    public char[][] rotateTheBox(char[][] box) {
+        int m = box.length;
+        int n = box[0].length;
+        System.out.println(m);
+        System.out.println(n);
+        char[][] newbox =new char[n][m];
+
+        int empty = n-1;
+        for( int row = 0; row < m;row++){
+            for (int col = n-1;col>=0;col--){
+                if (box[row][col]=='#'){
+                    empty= col+1;
+                    //keeps moving right to find the rightest empty spot
+                    while(empty <n && box[row][empty] =='.'){
+                        empty++;
+                    }
+                    //hit a non-empty stop;
+                    if(empty-1 < n && box[row][empty-1] =='.'){
+                        box[row][empty-1] = '#';
+                        box[row][col] = '.';
+                   
+                    }
+ 
+                }
+            }
+        }
+        for(int i = 0; i < m;i++){
+            for (int j =0; j < n;j++){
+                newbox[j][m-1-i] = box[i][j];
+            }
+        }
+        return newbox;
+    }
+}
+
+#valid sudoku
+#key idea:
+-go through the board according to the three rules.
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+               boolean[] checked = new boolean[10];
+        char temp ='.';
+        //go through rows
+        for (int i = 0;i < 9;i++){
+            for (int k = 0; k< 9;k++){
+                if(board[i][k] !='.' ){
+                    temp = board[i][k];
+                    if (!checked[(temp-'0')-1]){
+                        checked[(temp-'0')-1] = true;
+                    }else {
+                        System.out.println(i + " "+ k);
+                        return false;
+                    }
+
+
+                }
+            }
+            checked = new boolean[10];
+        }
+        checked = new boolean[10];
+        //go through columns
+    for (int i = 0; i < 9; i++) {
+      for (int k = 0; k < 9; k++) {
+        if (board[k][i] != '.') {
+          temp = board[k][i];
+          if (!checked[(temp - '0')]) {
+            checked[(temp - '0')] = true;
+          } else {
+            System.out.println(i + " "+ k);
+            return false;
+          }
+        }
+      }
+      checked = new boolean[10];
+    }
+    checked = new boolean[10];
+    int box_int = 0;
+    //go through boxes
+    while (box_int<9){
+        checked = new boolean[10];
+        System.out.println(box_int);
+        for (int k = 0; k < 3;k++){
+            for (int m = 0;m < 3;m++){
+                if (board[box_int+k][m]!='.'){
+                    temp = board[box_int+k][m] ;
+                    if (!checked[(temp-'0')]){
+                        checked[(temp-'0')] = true;
+                    }else {
+                        System.out.println(k + " "+ m);
+                        return false;
+                    }
+                }
+
+            }
+        }
+        checked = new boolean[10];
+        for (int k = 0; k < 3;k++){
+            for (int m = 3;m < 6;m++){
+                if (board[box_int+k][m]!='.'){
+                    temp = board[box_int+k][m] ;
+                    if (!checked[(temp-'0')]){
+                        checked[(temp-'0')] = true;
+                    }else {
+                        System.out.println(k + " "+ m);
+                        return false;
+                    }
+                }
+
+            }
+        }
+            checked = new boolean[10];
+        for (int k = 0; k < 3;k++){
+            for (int m = 6;m < 9;m++){
+                if (board[box_int+k][m]!='.'){
+                    temp = board[box_int+k][m] ;
+                    if (!checked[(temp-'0')]){
+                        checked[(temp-'0')] = true;
+                    }else {
+                        System.out.println(k + " "+ m);
+                        return false;
+                    }
+                }
+
+            }
+
+        
+    }
+            box_int = box_int+3;
+        }
+        return true;
+    }
+}
