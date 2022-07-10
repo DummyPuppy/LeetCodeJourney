@@ -137,3 +137,35 @@ class Solution {
         return true;
     }
 }
+
+#contain all integers from 1 to n each row and column
+class Solution {
+    public boolean checkValid(int[][] matrix) {
+        int n = matrix.length;
+        //check rows
+        boolean[] checked = new boolean[n+1];
+        for (int i = 0; i < n;i++){
+            for(int j = 0; j < n;j++){
+                if (!checked[matrix[i][j]]){
+                    checked[matrix[i][j]] = true;
+                }else{
+                    return false;
+                }
+            }
+            checked = new boolean[n+1];
+            
+        }
+        for (int i = 0; i < n;i++){
+            for(int j = 0; j < n;j++){
+                if (!checked[matrix[j][i]]){
+                    checked[matrix[j][i]] = true;
+                }else{
+                    return false;
+                }
+            }
+            checked = new boolean[n+1];
+        
+        }
+        return true;
+    }
+}
