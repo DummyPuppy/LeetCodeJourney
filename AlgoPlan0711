@@ -1,0 +1,100 @@
+#sum diagonal integers
+
+class Solution {
+    public int diagonalSum(int[][] mat) {
+        int n = mat.length;
+        int sum = 0;
+        if (n%2 !=0){
+            for (int m = 0; m < n;m++){
+                if (m != n/2){
+                    sum+=mat[m][m];
+                    sum+=mat[n-1-m][m];
+                }else{
+                    sum+=mat[m][m];
+                }
+            }
+        }else{
+            for(int k = 0; k < n;k++){
+                sum+=mat[k][k];
+                sum+=mat[n-1-k][k];
+            }
+        }
+        return sum;
+    }
+}
+
+#check if it is a x-matrix
+
+class Solution {
+    public boolean checkXMatrix(int[][] grid) {
+        boolean result = true;
+        int n = grid.length;
+        for(int k = 0; k < n;k++){
+            for (int j = 0; j < n;j++){
+                if(j !=k && j !=n-1-k){
+                    if (grid[k][j] !=0){
+                        return false;
+                    }
+                }else{
+                    if(grid[k][j] ==0){
+                        return false;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+
+#jump game III
+##key idea: 
+-dfs method: recursive through left and right jump
+-use a boolean[] to check if the point has been reached before
+-if it has been jumped to before and still has not reached a value of 0, give up and return false
+
+class Solution {
+    public boolean jump(int[] arr, int start, boolean[] lcheck, boolean[] rcheck){
+        int end = start + arr[start];
+        boolean result = false;
+        int n = arr.length;
+        
+        if (end >=0 && end < n){
+            if (!lcheck[end]){
+                if (arr[end] ==0){
+                    return true;
+                }else{
+                    lcheck[end] =true;
+                    result = jump(arr,end,lcheck,rcheck);
+                }
+            }else{
+                return false;
+            }
+           
+        }
+        if (result ==true){
+            return true;
+        }
+        
+        int temp  = start- arr[start];
+        if (temp >=0 && temp < n){
+            if (!rcheck[temp]){
+                if (arr[temp] ==0){
+                    return true;
+            }else{
+                rcheck[temp] = true;
+                result = jump(arr,temp,lcheck,rcheck);
+            }
+            }else{
+                return false;
+            }
+         
+        } 
+        return result;
+    }
+    public boolean canReach(int[] arr, int start) {
+        
+        boolean[] lcheck = new boolean[arr.length];
+        boolean[] rcheck = new boolean[arr.length];
+        return jump(arr,start,lcheck,rcheck);
+    }
+}
