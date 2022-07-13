@@ -98,3 +98,120 @@ class Solution {
         return jump(arr,start,lcheck,rcheck);
     }
 }
+
+#jump games
+##key idea:
+-don't mark if the number has been checked. continue on the search
+class Solution {
+    public boolean jump(int[] nums, int start, boolean[] lchecked,
+                       boolean[] rchecked){
+        int next = nums[start];
+        int last  = nums.length-1;
+        int temp  = start;
+        boolean result = false;
+        //if we can reach the last index within the max length
+        if (start+next >=last){
+            return true;
+        }else{
+            //if we cannot reach it 
+            //jump sub length
+        //for each jump length;
+        for (int k = 1; k <=next;k++){
+            //go to right
+            temp = start+k;
+            if(!rchecked[temp]){
+                rchecked[temp] = true;
+                result = jump(nums,temp,lchecked,rchecked);
+            }else{
+                continue;
+            }
+            
+            if (result){
+                return true;
+            }
+            //go to right
+            if(start-k >=0){
+                temp = start-k;
+                if (!lchecked[temp]){
+                    lchecked[temp] = true;
+                    result = jump(nums,temp,lchecked,rchecked);
+                }else{
+                    continue;
+                }
+            }
+            
+        
+            
+        }}    
+        return result;
+    }
+    public boolean canJump(int[] nums) {
+        if (nums.length ==1){
+            return true;
+        }
+        boolean[] lchecked = new boolean[nums.length];
+        boolean[] rchecked = new boolean[nums.length];
+        return jump(nums,0,lchecked, rchecked);
+    }
+}
+
+#jump games II
+#key idea:
+-always try to go to the farthest part 
+-when it is the farthest it can reach, get the farthest it can reach at this new position
+
+
+class Solution {
+ 
+    
+    public int jump(int[] nums) {
+        int jumps = 0;
+        int farthest = 0;
+        int current = 0;
+        for (int i  =0 ; i < nums.length-1;i++){
+            //for each integer
+            //find its farthest value;
+            farthest = Math.max(farthest, nums[i]+i);
+            if (i ==current){
+                //if it is the current position that can be reached by going one step further
+                current = farthest;
+                jumps++;
+                
+            }
+        }
+       
+        
+        return jumps;
+    }
+}
+
+#jump games VII
+#unsolved: time limit exceeded
+class Solution {
+    public boolean jump(String s, int minj, int maxj,int current){
+        int last = s.length()-1;
+        boolean result = false;
+        if (current+ minj > last){
+            return false;
+        }
+        if (current+ maxj >= last){
+            return true;
+        }
+        for (int k = minj;k <= Math.min(maxj,last-current);k++){
+                if (s.charAt(k+current) =='0'){
+                    result = jump(s,minj,maxj,current+k);
+                    if (result){
+                        return result;
+                    }
+                }
+            }
+        return result;
+    }
+    public boolean canReach(String s, int minJump, int maxJump) {
+        int current = 0;
+        if (s.charAt(s.length()-1) =='1'){
+            return false;
+        }
+        return jump(s,minJump,maxJump,current);
+    }
+}
