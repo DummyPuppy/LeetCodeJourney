@@ -1,0 +1,73 @@
+#longest univalue path
+#key idea:
+-depth first search of a tree
+-at each node, compare its left path and right path, and compare its sibling node's greatest path;
+-return this node's largest side path
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int  dfs(TreeNode node){
+        if (node ==null) return 0;
+        int leftPath = dfs(node.left);
+        int rightPath = dfs(node.right);
+        int rcheck = 0;
+        int lcheck = 0;
+        if (node.left !=null && node.left.val ==node.val){
+            lcheck = leftPath+1;
+        }
+        if (node.right !=null && node.right.val ==node.val){
+            rcheck = rightPath+1;
+        }
+        prev = Math.max(prev,lcheck+rcheck);
+        return Math.max(lcheck,rcheck);
+        
+    }
+    int prev = 0;
+    public int longestUnivaluePath(TreeNode root) {
+        dfs(root);
+        return prev;
+    }
+}
+
+#smashing stones
+##key idea:
+-use max heap through priorityqueue and insert the negative values
+
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        PriorityQueue<Integer> list  = new PriorityQueue<>(); //minheap
+        if (stones.length==1) return stones[0];
+        if (stones.length==2) return Math.abs(stones[0]-stones[1]);
+
+        for(int k : stones){
+            list.add(-k);
+        }
+        int first = 0;
+        int second= 0;
+        int remain = -1;
+//        List<Integer> sorted = list.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        while (list.size()>1){
+            first = list.remove();
+            second = list.remove();
+            if (first !=second){
+                list.add(-Math.abs(first- second));
+            }
+        }
+
+        return list.isEmpty() ? 0: -list.remove();
+    }
+}
