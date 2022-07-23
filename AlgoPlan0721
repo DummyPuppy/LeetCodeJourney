@@ -1,0 +1,42 @@
+#split into subarrays
+#not resolved
+
+class Solution {
+    public int waysToSplit(int[] nums) {
+        int n = nums.length;
+        int[] sizes = new int[n];
+        sizes[0] = nums[0];
+        for (int i = 1; i < n ;i++){
+            sizes[i] = nums[i]+sizes[i-1];
+        }
+        int count = 0;
+        int leftidx = 0;
+        int rightidx = n-2;
+        int left = sizes[leftidx];
+        int mid = sizes[rightidx]-left;
+        int right = sizes[n-1]-mid-left;
+        
+
+        while(leftidx < rightidx ){
+            //for every leftidx, move rightidx forward
+            if (left <= mid && mid <=right){
+                count++;
+                rightidx--;
+                mid = sizes[rightidx]-left;
+                right = sizes[n-1] - sizes[rightidx];
+            }else{
+                //if right idx cannot move forward anymore
+                if (left > mid && leftidx >0){
+                    leftidx++;//for a new left index
+                    //go back to its origin point
+                    rightidx = n-2;
+                    left = sizes[leftidx];
+                    mid =sizes[rightidx]-left;
+                    right = sizes[n-1] - sizes[rightidx];
+                }
+            }
+           
+        }
+        return count % 1000000007;
+    }
+}
