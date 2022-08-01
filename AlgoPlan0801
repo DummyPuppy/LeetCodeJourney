@@ -1,0 +1,80 @@
+#heaters
+##consider corner cases:
+-houses are on the left or right side of all heaters
+-houses are btw the heaters
+-use a distance to store the minimum distance of each house, and use a radius to record the max among them.
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        int n = houses.length;
+        int distance =0;
+        int radius = 0;
+        Arrays.sort(heaters);
+
+     
+        for (int j = 0; j < n;j++){
+            if (houses[j] <=heaters[0] || houses[j] >=heaters[heaters.length-1]){
+                distance = Math.min(Math.abs(heaters[0]-houses[j]),
+                                    Math.abs(houses[j]-heaters[heaters.length-1]));
+            }else{
+                for (int h = 0; h < heaters.length-1;h++){
+                    if (heaters[h] <=houses[j] && heaters[h+1] >=houses[j]){
+                        distance = Math.min(houses[j]-heaters[h], heaters[h+1]-houses[j]);
+                        break;
+                    }
+                  
+
+                }
+            }
+            System.out.println(distance);
+            if (distance > radius) radius = distance;
+        }
+        return radius;
+    }
+}
+
+#fibonnaci
+class Solution {
+    public int fib(int n) {
+        if (n ==0) return 0;
+        if (n ==1) return 1;
+        int[] seq = new int[n+1];
+        seq[0] = 0;
+        seq[1] = 1;
+        for (int i = 2; i <=n;i++){
+            seq[i] = seq[i-1]+seq[i-2];
+        }
+        return seq[n];
+    }
+}
+#longest length of fib sequences
+#not solved
+#but I think it is currect 
+class Solution {
+    public int lenLongestFibSubseq(int[] arr) {
+        int count =2;
+        int first =0;
+        int second = 0;
+        
+        int max = 0;
+        for(int k = 0;k < arr.length;k++){
+           first = arr[k];
+            for (int i = k+1; i < arr.length;i++){
+                second = arr[i];
+                count = 2;
+                for (int m = i+1;m < arr.length; m++){
+                    if (arr[m] ==first+second){
+                        count++;
+                        first = second;
+                        second  = arr[m];
+                        
+                    }
+                    if (arr[m] > first+ second){
+                        break;
+                    }
+                }
+                if (count > max) max = count;
+            }
+        }
+        return max;
+    }
+}
