@@ -1,0 +1,36 @@
+#twin-paired linked list
+##idea: store link node's info in an array for traversal
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int pairSum(ListNode head) {
+        int n = 0;
+        ListNode p1 = head;
+        ListNode p2 = head;
+        while(p1!=null){
+            n++;
+            p1 = p1.next;
+        }
+        int[] ans = new int[n];
+        for (int j = 0;j < n;j++){
+            ans[j] = p2.val;
+            p2 = p2.next;
+        }
+        int sum = 0; 
+        int cur =0;
+        for (int i =0; i < n/2;i++){
+            cur = ans[i] + ans[n-1-i];
+            if (cur > sum) sum = cur;
+        }
+        return sum;
+    }
+}
+
