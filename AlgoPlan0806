@@ -34,3 +34,9 @@ class Solution {
     }
 }
 
+
+#longest mountain in an array
+#key idea:
+-loop over left side and right side
+-take care of the pleateau
+-get the answer of each right side
