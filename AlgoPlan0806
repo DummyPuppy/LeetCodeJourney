@@ -40,3 +40,82 @@ class Solution {
 -loop over left side and right side
 -take care of the pleateau
 -get the answer of each right side
+class Solution {
+    public int longestMountain(int[] arr) {
+        int count = 0;
+        int max = 0;
+        int n = arr.length;
+        int left = 0;
+        int right = 0;
+        while (left < n){
+            while (left < n-1 && arr[left] >= arr[left+1]){
+                left++;
+            }
+            //at one possible left point
+            
+            right = left +1;
+            //if it is a high pleateau
+            while (right < n-1 && arr[right] < arr[right+1]){
+                right++;
+            }
+            while (right < n-1 && arr[right] > arr[right+1]){
+                right++;
+                //it is within the right side loop
+                //because if it just keeps increasing 
+                //it cannot be detected
+                
+                if (right-left+1 >=3 && right-left +1 > max) max  = right-left+1;
+            }
+           
+            left = right;
+        }
+        return max ;
+    }
+}
+
+
+
+#find num of pairs to get a certain sum
+key idea:
+use a hashmap to fasten the process
+class FindSumPairs {
+    int[] nums1 = null;
+    int[] nums2 = null;
+    Map<Integer,Integer> map1 = new HashMap();
+    Map<Integer,Integer> map2 = new HashMap();
+    public FindSumPairs(int[] nums1, int[] nums2) {
+       this.nums1 = nums1;
+        this.nums2 = nums2;
+        for (int i = 0; i< nums1.length;i++){
+            map1.put(nums1[i],map1.getOrDefault(nums1[i],0)+1);
+            }
+        for  (int j = 0; j < nums2.length;j++){
+            map2.put(nums2[j],map2.getOrDefault(nums2[j],0)+1);
+        }
+        }
+    
+    public void add(int index, int val) {
+        map2.put(nums2[index],map2.get(nums2[index])-1);
+        nums2[index] +=val;
+        map2.put(nums2[index],map2.getOrDefault(nums2[index],0)+1);
+    }
+    
+    public int count(int tot) {
+        
+        int counting = 0;
+        for (int k : map1.keySet()){
+            int rest = tot-k;
+            if (map2.containsKey(rest)){
+                counting +=map2.get(rest)*map1.get(k);
+            }
+        }
+        return counting;
+    }
+}
+
+/**
+ * Your FindSumPairs object will be instantiated and called as such:
+ * FindSumPairs obj = new FindSumPairs(nums1, nums2);
+ * obj.add(index,val);
+ * int param_2 = obj.count(tot);
+ */
