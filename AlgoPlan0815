@@ -1,0 +1,48 @@
+#find best days to rob the bank
+##key idea:
+-use two arrays to store the left and right time slot for each day
+-use pre-computation: today's time slot = yesterday/tomorrow's time slot +1 
+
+class Solution {
+    public List<Integer> goodDaysToRobBank(int[] security, int time) {
+        int n  = security.length;
+                List<Integer> result = new ArrayList();
+        int left = 0;
+        int cursor =1;
+        int right = 0;
+        int[] lefts = new int[n];
+        if ( time ==0){
+            for (int k = 0; k < n ;k++){
+                result.add(k);
+            }
+            return result;
+        }
+
+        while(cursor< n){
+           if(security[cursor-1] >=security[cursor]){
+                lefts[cursor] =lefts[cursor-1]+1;
+           }else{
+               lefts[cursor] = 0;
+           }
+            cursor++;
+            
+        }
+        cursor = n-2;
+        int[] righties = new int[n];
+        while (cursor >=0){
+            if ( security[cursor] <=security[cursor+1]){
+                righties[cursor] = righties[cursor+1]+1;
+            }else{
+                righties[cursor]=0;
+            }
+            cursor--;
+            
+        }
+        for (int i = 0; i < n; i ++){
+            if (lefts[i]  >=time && righties[i] >=time){
+                result.add(i);
+            }
+        }
+        return result;
+           }
+}
