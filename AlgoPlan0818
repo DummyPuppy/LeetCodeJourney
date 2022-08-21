@@ -24,3 +24,34 @@
 }
 
 
+## sum beauty of all strings 
+
+-key idea:
+-use a map to store the counts of all characters
+-use the map to calculate the beauty = most  freq char - least freq char
+-be aware of the corner cases
+class Solution {
+    public int getbeauty(int[] arrays){
+        int maxcount = -1;
+        int mincount = 1000;
+        for (int k = 0; k < arrays.length;k ++){
+            maxcount = Math.max(arrays[k],maxcount);
+            if (arrays[k]>= 1) mincount = Math.min(mincount, arrays[k]);
+        }
+        return maxcount-mincount > 0? maxcount - mincount: 0;
+    }
+    public int beautySum(String s) {
+        int[] arrays = new int[26];
+        int beauty = 0;
+        for (int i = 0; i < s.length();i++){
+            arrays = new int[26];
+            for (int j = i; j < s.length();j++){
+                arrays[s.charAt(j) - 'a']++;
+                beauty+=getbeauty(arrays);
+                 //System.out.println(beauty);
+            }
+        }
+        
+       return beauty;
+    }
+}
