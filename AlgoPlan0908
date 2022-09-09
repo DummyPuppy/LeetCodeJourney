@@ -1,0 +1,41 @@
+# second min value in a tree
+## key idea:
+-mark first min and second min
+-dfs: go over current node, and assign its value to fmin or smin if it satisfies certain criteria.
+-go over its left and then its right.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    long fmin = Long.MAX_VALUE;
+    long smin = Long.MAX_VALUE;
+    public void  bfs(TreeNode node){
+        if (node ==null) return;
+        if (node.val < fmin){
+            fmin = node.val;
+        }else if (node.val != fmin && node.val < smin){
+            smin = node.val;
+        }
+        bfs(node.left);
+        bfs(node.right);
+
+    }
+    public int findSecondMinimumValue(TreeNode root) {
+        if (root ==null) return -1;
+        bfs(root);
+        return smin == Long.MAX_VALUE ? -1:(int) smin;
+    }
+}
