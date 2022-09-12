@@ -1,0 +1,45 @@
+# kth smallest element in an array 
+## best practic: bst is balanced in that on the left hand side it is all smaller, on the right hand side it is all bigger.
+## so we just loop over the left and then come out and go over the right.
+## when it accumulates to k we return the value
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int pivot = 0;
+    public int p = 0;
+    public boolean found = false;
+    public int dfs(TreeNode cur, int k ){
+        if ( cur == null) return 0;
+        if (!found){
+            pivot = dfs(cur.left,k);
+        }
+        p++;
+        if (p==k){
+            found = true;
+            return cur.val;
+        }
+        if (!found){
+            pivot = dfs(cur.right,k);
+        }
+        
+        return pivot;
+    }
+    public int kthSmallest(TreeNode root, int k) {
+        TreeNode cur = root;
+        return dfs(cur, k);
+    }
+}
