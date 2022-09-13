@@ -1,0 +1,169 @@
+# basic tree manipulation
+
+## in order traversal
+
+## in order: from left to mid to right
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> result = new ArrayList();
+    public void travel(TreeNode temp){
+            if (temp!=null){
+
+            travel(temp.left);
+            result.add(temp.val);
+            travel(temp.right);
+        }
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        travel(root);
+        return result;
+        
+    }
+}
+
+## pre-order traversal
+## pre-order: from mid  to left and to right
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<Integer> result = new ArrayList();
+    public List<Integer> preorderTraversal(TreeNode root) {
+        if (root!=null){
+            result.add(root.val);
+            preorderTraversal(root.left);
+            preorderTraversal(root.right);
+        }
+        return result;
+    }
+}
+
+
+## k-ary tree pre-order traversal
+## loop over its many children
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    List<Integer> result = new ArrayList();
+    public List<Integer> preorder(Node root) {
+        if (root !=null){
+            result.add(root.val);
+            for (Node n : root.children){
+                preorder(n);
+            }
+            
+        }
+        return result;
+    }
+}
+
+
+## k-ary post-order traversal
+## post-order: from right-est to the left-est and then yourself :)
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    List<Integer> result = new ArrayList();
+    public List<Integer> postorder(Node root) {
+        if(root!=null){
+            for (Node n: root.children){
+                postorder(n);
+            }
+            result.add(root.val);
+        }
+        return result;
+    }
+}
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<Integer> result = new ArrayList();
+    public List<Integer> postorderTraversal(TreeNode root) {
+        if (root!=null){
+            postorderTraversal(root.left);
+            postorderTraversal(root.right);
+            result.add(root.val);
+        }
+        return result;
+    }
+}
