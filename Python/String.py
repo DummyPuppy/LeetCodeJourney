@@ -1,3 +1,5 @@
+#zigzag conversion
+#use a row counter to go back and forth between rows in a zigzag way.
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
         if numRows <=1:
