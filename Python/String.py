@@ -23,4 +23,18 @@ class Solution:
         return converted
 
 
-        
+       # return the longest common prefix in a list of strings 
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if len(strs) ==0:
+            return ""
+        else:
+            result = ""
+            
+            begin = min(strs)
+            for i in range(len(begin)):
+                for s in strs:
+                    if i == len(s) or s[i] != begin[i]:
+                        return result
+                result +=begin[i]
+            return result
