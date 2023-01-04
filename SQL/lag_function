@@ -1,0 +1,6 @@
+# find date id that has higher temperature compared to its yesterday
+select distinct w1.id
+from
+(select id, recordDate, temperature, lag(temperature,1) over ( order by recordDate) as tempPrev
+from Weather ) as w1
+where tempPrev < temperature
