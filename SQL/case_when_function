@@ -1,0 +1,11 @@
+#find the stock prices
+# Write your MySQL query statement below
+
+select distinct stock_name,
+sum(case
+when operation ='Buy' then -price
+when operation = 'Sell' then price
+end)
+as 'capital_gain_loss'
+from Stocks
+group by stock_name
