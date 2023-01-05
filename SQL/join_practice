@@ -4,3 +4,13 @@ select customer_id, count(v.visit_id) as "count_no_trans"
 from Visits v left join Transactions t on (v.visit_id = t.visit_id)
 where t.visit_id is null
 group by v.customer_id
+
+# Write your MySQL query statement below
+#select salesperson who do not have any order with company 'RED'
+select name
+from SalesPerson
+where name not in 
+(select sp.name
+from Orders o join Company c on (o.com_id = c.com_id)
+join SalesPerson sp on (o.sales_id = sp.sales_id)
+where c.name = 'RED')
