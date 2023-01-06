@@ -97,3 +97,33 @@ class Solution:
                 if target in setneg:
                     result.add((pos[m],pos[n],target))
         return result
+
+    
+    #spiral traversal
+    class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        result = list()
+        leftbound = 0
+        rightbound = len(matrix[0])
+        lowerbound = len(matrix)
+        upperbound = 0
+
+        while leftbound < rightbound and upperbound < lowerbound:
+            for i in range(leftbound,rightbound):
+                result.append(matrix[upperbound][i])
+            upperbound +=1
+            for j in range(upperbound, lowerbound):
+                result.append(matrix[j][rightbound-1])
+            rightbound -=1
+
+            if not (leftbound < rightbound and upperbound < lowerbound):
+                break
+            
+
+            for i in range(rightbound-1,leftbound - 1, -1):
+                result.append(matrix[lowerbound-1][i])
+            lowerbound -=1
+            for j in range(lowerbound-1,upperbound-1,-1):
+                result.append(matrix[j][leftbound])
+            leftbound +=1
+        return result
