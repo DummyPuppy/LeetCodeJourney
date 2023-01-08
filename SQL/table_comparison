@@ -3,3 +3,12 @@ SELECT w1.Id
 FROM Weather w1, Weather w2
 WHERE dateDiff(w1.recordDate,w2.recordDate) = 1 AND w1.Temperature > w2.Temperature;
 where tempPrev < temperature and yesterday + 1 = recordDate
+
+
+
+#fidn duplicate emails
+# Write your MySQL query statement below
+
+select distinct p1.email  as 'Email'
+from Person p1, Person p2
+where p1.id != p2.id and p1.email = p2.email
