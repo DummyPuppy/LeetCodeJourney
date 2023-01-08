@@ -24,3 +24,14 @@ where c.name = 'RED')
 select s.user_id as 'buyer_id', join_date, ifnull(count(order_id),0) as 'orders_in_2019'
 from Users s left join Orders o on (s.user_id =  o.buyer_id and year(o.order_date) = 2019)
 group by user_id, join_date
+
+
+
+#find user with > 10000 balance
+# Write your MySQL query statement below
+
+select name, sum(amount) as 'balance'
+from Users u join Transactions t on (u.account = t.account)
+group by name
+having sum(amount) > 10000
+order by balance
