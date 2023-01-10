@@ -127,3 +127,42 @@ class Solution:
                 result.append(matrix[j][leftbound])
             leftbound +=1
         return result
+    
+    
+    #spiral insertion
+    class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        left = 0
+        right = n
+        top = 0
+        bottom = n
+        pos = 1
+        mat = [[0]* n for i in range(n)]
+        while (left < right and top < bottom):
+            for i in range(left,right):
+                mat[top][i] = pos
+                pos+=1
+            top+=1
+
+            for j in range(top,bottom):
+                mat[j][right-1] = pos
+                pos+=1
+            right-=1
+
+            if not (left < right and top < bottom):
+                break
+            for k in range(right-1,left-1 ,-1):
+                mat[bottom-1][k] = pos
+                pos+=1
+            bottom-=1
+            
+            for m in range(bottom-1,top-1,-1):
+                mat[m][left] = pos
+                pos+=1
+            left+=1
+            
+            
+        return mat
+
+            
+            
