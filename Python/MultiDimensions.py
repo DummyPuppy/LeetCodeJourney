@@ -27,3 +27,21 @@ class Solution:
         result.append(newInterval)
         return result
             
+        
+        
+    #unique paths across a matrix
+    class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        steps = [[0 for i in range(n)] for k in range(m)]
+        steps[0][0] = 1
+        for i in range(m):
+            steps[i][0] = 1
+        for j in range(n):
+            steps[0][j] = 1
+        for k in range(1,m):
+            for l in range(1,n):
+                steps[k][l] = steps[k-1][l] + steps[k][l-1]
+        return steps[m-1][n-1]
+        
+            
+                
