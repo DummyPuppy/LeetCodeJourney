@@ -45,3 +45,32 @@ class Solution:
         
             
                 
+      #unique paths with obstacles
+    class Solution:
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
+        if obstacleGrid[0][0] == 1:
+            return 0
+        m = len(obstacleGrid)
+        n = len(obstacleGrid[0])
+
+        steps = [[0 for k in range(n)] for i in range(m)]
+
+        steps[0][0] = 1
+        for i in range(1,m):
+            if obstacleGrid[i][0] ==0:
+                steps[i][0] = steps[i-1][0]
+            else:
+                steps[i][0] = 0
+        for j in range(1,n):
+            if obstacleGrid[0][j] ==0:
+                steps[0][j] = steps[0][j-1]
+            else:
+                steps[0][j] = 0
+        for k in range(1,m):
+            for l in range(1,n):
+                if obstacleGrid[k][l] ==1:
+                    steps[k][l] = 0
+                else:
+                    steps[k][l] = steps[k-1][l] + steps[k][l-1]
+        return steps[m-1][n-1]
+
