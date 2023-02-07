@@ -166,3 +166,17 @@ class Solution:
 
             
             
+#find palidrome
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        s = str(x)
+        if len(s) % 2 ==0:
+            l = len(s)/2
+        else:
+            l = (len(s)-1)/2
+        print(l)
+        for i in range(int(l)):
+            if s[i] != s[len(s)-i-1]:
+                return False
+            
+        return True
