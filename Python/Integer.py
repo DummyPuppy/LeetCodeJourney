@@ -180,3 +180,37 @@ class Solution:
                 return False
             
         return True
+
+  #convert integer to roman letter
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        if num <=0:
+            return ''
+        
+        answer = ''
+
+        map = dict()
+        map[1] = 'I'
+        map[4] = 'IV'
+        map[5] = 'V'
+        map[9] = 'IX'
+        map[10] = 'X'
+        map[40] = 'XL'
+        map[50] = 'L'
+        map[90] = 'XC'
+        map[100] = 'C'
+        map[400] = 'CD'
+        map[500] = 'D'
+        map[900] = 'CM'
+        map[1000] = 'M'
+        print(map)
+        for key, value in reversed(map.items()):
+            if num // key:
+                count = num //key
+                answer += count * value
+                num = num % key
+
+        return  answer
+
+
+            
