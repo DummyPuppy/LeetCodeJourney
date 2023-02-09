@@ -212,5 +212,26 @@ class Solution:
 
         return  answer
 
+#3 sum closest
+#set one fixed, sort the nums and set smallest and largest
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
 
+        distance = float('inf')
+        n = len(nums)
+        for first in range(n-2):
+            left, right = first+1, n-1
+            sub_target = target - nums[first]
+            while left < right:
+                s = nums[left] + nums[right]
+                if s == sub_target:
+                    return target
+                elif s < sub_target:
+                    left +=1
+                else:
+                    right -=1
+                if abs(distance) > abs(sub_target- s):
+                    distance = sub_target - s
+        return target - distance
             
