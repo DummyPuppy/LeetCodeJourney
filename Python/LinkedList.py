@@ -56,3 +56,25 @@ class Solution:
             curr = curr.next
             p2 = p2.next
         return dummy.next
+
+    #swap nodes in pairs
+    #key is to exchange values!
+    # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+        curr = head
+
+        while curr != None and curr.next != None:
+            first_val = curr.val
+            after  = curr.next
+            after_val = after.val
+            after.val = first_val
+            curr.val = after_val
+            curr = curr.next.next
+        return head
