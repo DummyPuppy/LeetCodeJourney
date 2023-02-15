@@ -78,3 +78,32 @@ class Solution:
             curr.val = after_val
             curr = curr.next.next
         return head
+
+#swap nodes at kth from the head and kth from the tail
+#key point is that it only needs to iterate k-1 times 
+#if you assign it to be the head at first!
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next:
+            return head
+        fast = slow = head
+        for i in range(k-1):
+            fast = fast.next
+        
+        swap1 = fast
+
+        while swap1.next:
+            slow = slow.next
+            swap1 = swap1.next
+        
+        val1 = fast.val
+        print(val1)
+        print(slow.val)
+        fast.val = slow.val
+        slow.val = val1
+        return head
