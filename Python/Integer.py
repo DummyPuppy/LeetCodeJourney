@@ -277,3 +277,19 @@ class Solution:
                 elif abs(nums[i] - nums[j]) == k:
                     count +=1
         return count
+    
+    #another easy case
+    #find pairs that satisfied: nums[i] == nums[j] and j*i % k ==0
+    class Solution:
+    def countPairs(self, nums: List[int], k: int) -> int:
+        if not nums:
+            return 0
+
+        count = 0
+
+        for i in range(len(nums)):
+            for j in range(i+1, len(nums)):
+                if (nums[i] == nums[j]) and (i*j) % k  ==0:
+                    print(i, j)
+                    count +=1
+        return count
