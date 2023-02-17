@@ -91,4 +91,13 @@ class Solution:
         
 
     
-
+#this is the weirdest medium case
+#find three consecutive nums to sum up to k
+class Solution:
+    def sumOfThree(self, num: int) -> List[int]:
+        mid = int(num/3)
+        if mid-1 + mid + mid+1 == num:
+            return [mid-1, mid, mid+1]
+        else: 
+            print(mid)
+            return []
