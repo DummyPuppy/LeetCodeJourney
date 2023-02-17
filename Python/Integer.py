@@ -1,4 +1,4 @@
-//reverse integer and assign the correct sign
+#reverse integer and assign the correct sign
 
 class Solution:
     def reverse(self, x: int) -> int:
@@ -234,4 +234,28 @@ class Solution:
                 if abs(distance) > abs(sub_target- s):
                     distance = sub_target - s
         return target - distance
+   
+  #find unique k-diff pairs
+    class Solution:
+    def findPairs(self, nums: List[int], k: int) -> int:
+        if not nums:
+            return 0
+
+        nums.sort()
+        combo = []
+        for i in range(len(nums)):
+            left = nums[i]
+            for j in range(i+1, len(nums)):
+                right = nums[j]
+                if abs(left- right) > k:
+                    break
+                elif abs(left - right) < k:
+                    continue
+                elif abs(left- right) == k:
+                    if [left,right] not in combo:
+                        combo.append([left,right])
+                    else:
+                        continue
+        return len(combo)
+
             
