@@ -48,3 +48,47 @@ class Solution:
                     stack.append((idx+1, char + letter))
         return combo
                 
+#mine sweeper
+#soooo difficult
+#consider three cases and need a helper method
+class Solution:
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
+        if not board:
+            return board
+        r = click[0]
+        c = click[1]
+        n = len(board[0])
+        m = len(board)
+        def AdjacentMines(x,y):
+            count = 0
+            if board[x][y] == 'E':
+                for i in range(x-1,x+2):
+                    for j in range(y-1,y+2):
+                        if (i >=0 and i < m) and (j >=0 and j < n):
+                            print(i,j)
+                            if board[i][j] == 'M':
+                                count +=1
+            return count
+                        
+                
+
+        if board[r][c] == 'M':
+            board[r][c] = 'X'
+        else:
+            if board[r][c] =='E':
+                count = AdjacentMines(r,c)
+                if count != 0:
+                    board[r][c] = str(count)
+                else:
+                    board[r][c] = 'B'
+                    for i in range(r-1,r+2):
+                        for j in range(c-1,c+2):
+                            if (i >=0 and i < m) and (j >=0 and j < n) \
+                            and board[i][j] != 'B':
+                                self.updateBoard(board,[i,j])
+        
+        return board
+        
+
+    
+
