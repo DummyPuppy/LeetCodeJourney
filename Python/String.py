@@ -77,3 +77,32 @@ class Solution:
             return -2**31
         else:
             return parsed
+        
+  # check if a string can break anothe string
+# if x[i] >= y[i] for i in 0 to n
+
+class Solution:
+    def checkIfCanBreak(self, s1: str, s2: str) -> bool:
+        if not s1 or not s2:
+            return False
+        arr1 = [c for c in s1]
+        arr1.sort()
+        arr2 = [c for c in s2]
+        arr2.sort()
+        idx = 0
+        while arr1[idx] == arr2[idx]:
+            idx+=1
+            if idx == len(arr1):
+                return True
+        
+        order = arr1[idx] >= arr2[idx]
+
+        while idx < len(arr1):
+            if arr1[idx] == arr2[idx]:
+                idx+=1
+                continue
+            if (arr1[idx] >= arr2[idx]) != order:
+                return False
+            idx +=1
+
+        return True
