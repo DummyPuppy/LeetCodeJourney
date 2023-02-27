@@ -106,3 +106,22 @@ class Solution:
             idx +=1
 
         return True
+
+    #remove a b pelindrome
+    #only contains a or b and you can take subsequences
+    class Solution:
+    def removePalindromeSub(self, s: str) -> int:
+        def IsPalindrome(s:str) ->bool:
+            i, j = 0, len(s)-1
+            while i < j:
+                if  (s[i] == s[j]) :
+                    i+=1
+                    j-=1
+                    continue
+                else:
+                    return False
+            return True
+        if IsPalindrome(s):
+            return 1
+        else:
+            return 2
